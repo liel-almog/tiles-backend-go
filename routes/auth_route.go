@@ -1,17 +1,13 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"tiles/tiles-backend-go/controllers"
+
+	"github.com/gin-gonic/gin"
+)
 
 func AuthRoute(router *gin.Engine) {
-	router.POST("/auth/signup", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello World",
-		})
-	})
+	router.POST("/auth/login", controllers.GetAUser())
 
-	router.POST("/auth/login", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello World",
-		})
-	})
+	router.POST("/auth/signup", controllers.CreateUser())
 }
