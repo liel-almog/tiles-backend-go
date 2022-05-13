@@ -76,6 +76,16 @@ func UpdateTiles() gin.HandlerFunc {
 			return
 		}
 
+		if validationErr := validate.Var(updateTiles, "required,dive"); validationErr != nil {
+			c.JSON(http.StatusBadRequest, res.ErrorRes{
+				Message: "Bad request",
+				Status:  http.StatusBadRequest,
+				Data:    map[string]interface{}{"data": validationErr.Error()},
+			})
+
+			return
+		}
+
 		var models []mongo.WriteModel
 
 		for _, tile := range updateTiles.Added {

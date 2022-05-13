@@ -112,15 +112,15 @@ func UpdateRoles() gin.HandlerFunc {
 			return
 		}
 
-		// if validationErr := validate.Struct(updateRole); validationErr != nil {
-		// 	c.JSON(http.StatusBadRequest, res.ErrorRes{
-		// 		Status:  http.StatusBadRequest,
-		// 		Message: "Validation Error",
-		// 		Data:    map[string]interface{}{"error": validationErr.Error()},
-		// 	})
+		if validationErr := validate.Var(updateRole, "required,dive"); validationErr != nil {
+			c.JSON(http.StatusBadRequest, res.ErrorRes{
+				Status:  http.StatusBadRequest,
+				Message: "Validation Error",
+				Data:    map[string]interface{}{"error": validationErr.Error()},
+			})
 
-		// 	return
-		// }
+			return
+		}
 
 		var models []mongo.WriteModel
 		for _, user := range updateRole {
