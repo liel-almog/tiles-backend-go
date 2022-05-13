@@ -20,5 +20,5 @@ func main() {
 	routes.AuthRoute(router)
 	routes.TileRoute(router)
 
-	router.Run("localhost:8080")
+	router.Run(":8080")
 }

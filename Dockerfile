@@ -1,14 +1,15 @@
-FROM golang:1.18
+FROM golang:1.16-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# pre-copy/cache go.mod for pre-downloading dependencies and only redownloading them in subsequent builds if they change
-COPY go.mod go.sum ./
-RUN go mod download && go mod verify
+ENV GIN_MODE=release
 
 COPY . .
-RUN go build -o main .
+
+RUN go mod download
+
+RUN go build ./
 
 EXPOSE 8080
 
-CMD ["/usr/src/app/main"]
+CMD [ "./tiles-backend-go" ]
